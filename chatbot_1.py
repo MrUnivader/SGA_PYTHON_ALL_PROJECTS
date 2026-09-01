@@ -11,5 +11,13 @@ pairs = [
   #[r"(.*)",  ["Sorry, I didnt understand that.Could you rephrase?"."]
 
  ]
-chatbot = Chat(pairs, reflections)
+
+custom_reflections=reflections.copy()
+custom_reflections.update({
+ 
+  "we":"you all"
+
+})
+
+chatbot = Chat(pairs,custom_reflections)
 chatbot.converse()
