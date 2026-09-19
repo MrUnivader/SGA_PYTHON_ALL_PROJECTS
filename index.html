@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App-Style Canteen Menu</title>
+    <title>Nature Theme Canteen Menu</title>
     <style>
-        /* Base Reset & Soft Beige Theme */
         :root {
-            --bg-color: #f7f5f0;
+            --bg-outer: #e6f2eb;
+            --bg-inner: #f4fbf7;
+            --header-bg: #dceddf;
+            --text-main: #2b4733;
+            --text-muted: #6b8774;
+            --accent-green: #689f76;
+            --accent-light: #a9c7b2;
             --card-bg: #ffffff;
-            --header-bg: #eae3d2;
-            --text-main: #4a453f;
-            --text-muted: #8b8378;
-            --accent-green: #a3b19b;
-            --accent-brown: #c5a880;
-            --accent-clay: #d69f89;
         }
 
         body {
             margin: 0;
-            background: #e6e2d8; /* Outer background for desktop */
+            background: var(--bg-outer);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
@@ -29,63 +28,100 @@
             overflow: hidden;
         }
 
-        /* Mobile App Container */
         .app-container {
             width: 100%;
             max-width: 420px;
             height: 90vh;
             max-height: 850px;
-            background: var(--bg-color);
+            background: var(--bg-inner);
             position: relative;
             border-radius: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            box-shadow: 0 25px 50px rgba(43, 71, 51, 0.15);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* Splash Screen Animation */
+        /* Nature Splash Screen */
         #splash-screen {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--header-bg);
+            background: var(--bg-inner);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
-        .splash-logo {
-            width: 80px;
-            height: 80px;
-            background: var(--accent-brown);
-            border-radius: 50%;
+        .nature-scene {
+            position: relative;
+            width: 200px;
+            height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-            animation: pulseLogo 1.5s ease-in-out infinite;
-            box-shadow: 0 10px 20px rgba(197, 168, 128, 0.4);
         }
 
-        @keyframes pulseLogo {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(197, 168, 128, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(197, 168, 128, 0); }
+        .nature-element {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .tree {
+            font-size: 80px;
+            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.2s;
+            z-index: 2;
+        }
+
+        .animal {
+            font-size: 40px;
+            bottom: 20px;
+            left: 20px;
+            animation: slideInLeft 0.8s ease forwards;
+            animation-delay: 0.8s;
+            z-index: 3;
+        }
+
+        .flower-1 { font-size: 30px; bottom: 30px; right: 40px; animation: popUp 0.5s forwards; animation-delay: 1.2s; }
+        .flower-2 { font-size: 25px; bottom: 20px; right: 10px; animation: popUp 0.5s forwards; animation-delay: 1.4s; }
+        
+        .butterfly {
+            font-size: 30px;
+            top: 20px;
+            right: 0px;
+            animation: flyIn 1.5s ease-in-out forwards;
+            animation-delay: 1.6s;
+        }
+
+        @keyframes popUp {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-50px) scale(0.5); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        @keyframes flyIn {
+            0% { opacity: 0; transform: translate(50px, -50px) scale(0.5) rotate(20deg); }
+            50% { transform: translate(-10px, 10px) scale(1) rotate(-10deg); }
+            100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
         }
 
         /* Header */
         header {
-            background: var(--card-bg);
+            background: var(--header-bg);
             padding: 25px 20px 20px;
             text-align: center;
-            border-bottom: 2px solid #eeebe3;
             z-index: 10;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border-bottom: 3px solid var(--accent-light);
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .student-name {
@@ -99,25 +135,25 @@
         .student-class {
             font-size: 13px;
             font-weight: 700;
-            color: var(--accent-brown);
+            color: var(--accent-green);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-top: 5px;
             display: inline-block;
-            background: #fbf9f6;
+            background: var(--card-bg);
             padding: 4px 12px;
             border-radius: 20px;
         }
 
-        /* Scrollable Menu Area */
+        /* Menu Area */
         .menu-scroll {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
-            padding-bottom: 100px; /* Space for footer */
-            scrollbar-width: none; /* Firefox */
+            padding-bottom: 100px;
+            scrollbar-width: none;
         }
-        .menu-scroll::-webkit-scrollbar { display: none; } /* Chrome */
+        .menu-scroll::-webkit-scrollbar { display: none; }
 
         .category-title {
             font-size: 14px;
@@ -128,7 +164,6 @@
             font-weight: 700;
         }
 
-        /* Menu Items */
         .menu-item {
             background: var(--card-bg);
             border-radius: 20px;
@@ -142,14 +177,14 @@
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(139, 131, 120, 0.05);
+            box-shadow: 0 5px 15px rgba(104, 159, 118, 0.08);
         }
 
         .menu-item:active { transform: scale(0.96); }
 
         .menu-item.selected {
             border-color: var(--accent-green);
-            background: #f6f8f4;
+            background: var(--header-bg);
         }
 
         .item-details { pointer-events: none; z-index: 2; }
@@ -166,21 +201,12 @@
             color: var(--text-muted);
         }
 
-        /* Colored Dots for variety */
-        .dot {
-            display: inline-block;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        .dot-coffee { background: var(--accent-brown); }
-        .dot-food { background: var(--accent-clay); }
-        .dot-tea { background: var(--accent-green); }
+        .item-icon { margin-right: 8px; font-size: 16px; }
 
         .item-price {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-main);
-            background: var(--bg-color);
+            background: var(--bg-inner);
             padding: 8px 14px;
             border-radius: 12px;
             font-size: 14px;
@@ -192,16 +218,16 @@
         .menu-item.selected .item-price {
             background: var(--accent-green);
             color: white;
-            box-shadow: 0 4px 10px rgba(163, 177, 155, 0.4);
+            box-shadow: 0 4px 10px rgba(104, 159, 118, 0.4);
+            transform: scale(1.1);
         }
 
-        /* Ripple Effect */
         .ripple {
             position: absolute;
             border-radius: 50%;
             transform: scale(0);
             animation: ripple-anim 0.6s ease-out;
-            background-color: rgba(163, 177, 155, 0.2);
+            background-color: rgba(104, 159, 118, 0.2);
             z-index: 1;
         }
 
@@ -209,19 +235,19 @@
             to { transform: scale(4); opacity: 0; }
         }
 
-        /* App Footer */
+        /* Footer */
         footer {
             position: absolute;
             bottom: 0; left: 0; right: 0;
             background: var(--card-bg);
             padding: 20px 25px;
-            border-top: 1px solid #eeebe3;
+            border-top: 2px solid var(--accent-light);
             box-shadow: 0 -10px 20px rgba(0,0,0,0.03);
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 10;
-            border-radius: 0 0 30px 30px;
+            border-radius: 25px 25px 30px 30px;
         }
 
         .total-label {
@@ -249,25 +275,30 @@
 
     <div class="app-container">
         
-        <!-- App Startup Splash Screen -->
+        <!-- Nature Splash Screen -->
         <div id="splash-screen">
-            <div class="splash-logo">YS</div>
+            <div class="nature-scene">
+                <div class="nature-element tree">🌳</div>
+                <div class="nature-element animal">🦌</div>
+                <div class="nature-element flower-1">🌸</div>
+                <div class="nature-element flower-2">🌼</div>
+                <div class="nature-element butterfly">🦋</div>
+            </div>
+            <h3 style="margin-top: 30px; color: var(--accent-green); opacity: 0; animation: popUp 0.5s forwards 2s;">Welcome!</h3>
         </div>
 
-        <!-- Fixed Header -->
         <header>
             <h1 class="student-name">YASH SANGRA</h1>
             <div class="student-class">CSE C-3</div>
         </header>
 
-        <!-- Scrollable Menu -->
         <div class="menu-scroll">
             
-            <div class="category-title">Handcrafted Beverages</div>
+            <div class="category-title">Drinks</div>
             
             <div class="menu-item" data-price="160">
                 <div class="item-details">
-                    <div class="item-name"><span class="dot dot-coffee"></span>Cold Brew Coffee</div>
+                    <div class="item-name"><span class="item-icon">☕</span>Cold Brew Coffee</div>
                     <div class="item-desc">Slow-steeped for 16 hours</div>
                 </div>
                 <div class="item-price">₹160</div>
@@ -275,41 +306,41 @@
 
             <div class="menu-item" data-price="180">
                 <div class="item-details">
-                    <div class="item-name"><span class="dot dot-coffee"></span>Iced Vanilla Latte</div>
-                    <div class="item-desc">Espresso with chilled milk & vanilla</div>
+                    <div class="item-name"><span class="item-icon">🥛</span>Iced Vanilla Latte</div>
+                    <div class="item-desc">Espresso with chilled milk</div>
                 </div>
                 <div class="item-price">₹180</div>
             </div>
 
             <div class="menu-item" data-price="120">
                 <div class="item-details">
-                    <div class="item-name"><span class="dot dot-tea"></span>Matcha Green Tea</div>
+                    <div class="item-name"><span class="item-icon">🍵</span>Matcha Green Tea</div>
                     <div class="item-desc">Earthy, sweet, and iced</div>
                 </div>
                 <div class="item-price">₹120</div>
             </div>
 
-            <div class="category-title" style="margin-top: 25px;">Fresh Bakery & Food</div>
+            <div class="category-title" style="margin-top: 25px;">Food</div>
 
             <div class="menu-item" data-price="140">
                 <div class="item-details">
-                    <div class="item-name"><span class="dot dot-food"></span>Butter Croissant</div>
-                    <div class="item-desc">Flaky, golden, and freshly baked</div>
+                    <div class="item-name"><span class="item-icon">🥐</span>Butter Croissant</div>
+                    <div class="item-desc">Flaky, golden, and fresh</div>
                 </div>
                 <div class="item-price">₹140</div>
             </div>
 
             <div class="menu-item" data-price="190">
                 <div class="item-details">
-                    <div class="item-name"><span class="dot dot-food"></span>Paneer Tikka Sandwich</div>
-                    <div class="item-desc">Spiced filling in toasted sourdough</div>
+                    <div class="item-name"><span class="item-icon">🥪</span>Paneer Sandwich</div>
+                    <div class="item-desc">Spiced filling in toasted bread</div>
                 </div>
                 <div class="item-price">₹190</div>
             </div>
 
             <div class="menu-item" data-price="110">
                 <div class="item-details">
-                    <div class="item-name"><span class="dot dot-food"></span>Blueberry Muffin</div>
+                    <div class="item-name"><span class="item-icon">🧁</span>Blueberry Muffin</div>
                     <div class="item-desc">Soft muffin with warm berries</div>
                 </div>
                 <div class="item-price">₹110</div>
@@ -317,14 +348,12 @@
 
         </div>
 
-        <!-- Fixed Footer -->
         <footer>
             <div>
                 <div class="total-label">Order Total</div>
                 <div class="total-amount" id="total-price">₹0</div>
             </div>
-            <!-- Aesthetic visual button, not fully functional just for app feel -->
-            <div style="background: var(--text-main); color: white; padding: 12px 24px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 14px;">
+            <div style="background: var(--accent-green); color: white; padding: 12px 24px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 14px;">
                 Checkout
             </div>
         </footer>
@@ -332,18 +361,18 @@
     </div>
 
     <script>
-        // Splash Screen Logic
+        // Splash Screen Timing
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 splash.style.opacity = '0';
                 setTimeout(() => {
                     splash.style.visibility = 'hidden';
-                }, 600);
-            }, 1800); // Wait 1.8 seconds before fading out
+                }, 800);
+            }, 3200); // Waits for all nature animations to finish
         });
 
-        // Menu Logic
+        // Interactive Menu Logic
         let total = 0;
         const menuItems = document.querySelectorAll('.menu-item');
         const totalDisplay = document.getElementById('total-price');
@@ -351,7 +380,7 @@
         menuItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 
-                // Ripple Effect Calculation
+                // Ripple Effect
                 const circle = document.createElement('span');
                 const diameter = Math.max(item.clientWidth, item.clientHeight);
                 const radius = diameter / 2;
@@ -366,7 +395,7 @@
                 }
                 item.appendChild(circle);
 
-                // Add or Remove Price
+                // Price Math
                 const price = parseInt(item.getAttribute('data-price'));
                 
                 if (item.classList.contains('selected')) {
@@ -377,10 +406,9 @@
                     total += price;
                 }
                 
-                // Update Footer Total
                 totalDisplay.innerText = '₹' + total;
                 
-                // Animate Total Text
+                // Total Animation
                 totalDisplay.classList.add('pop-anim');
                 setTimeout(() => {
                     totalDisplay.classList.remove('pop-anim');
